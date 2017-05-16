@@ -8,8 +8,8 @@ function [] = ivc(filename)
     recto = 0;
     delay = 10;
     while hasFrame(video)
-        frameOrig = readFrame(video);
-        gris = rgb2gray(frameOrig);  
+        frame = readFrame(video);
+        gris = rgb2gray(frame);  
         
         if mod(cont,delay) == 0
             %aplicamos filtro de media
@@ -36,15 +36,15 @@ function [] = ivc(filename)
             %fueras = filled - amax(1:h, 1:j);
             %%%%negro = 0*gris;
             f = int32(centro(:,1));
-            c = int32(centro(:,2));
+            %c = int32(centro(:,2));
             
-            left = ['LEFT ', num2str(f)];
-            right = ['RIGHT ', num2str(f)];
+            %left = ['LEFT ', num2str(f)];
+            %right = ['RIGHT ', num2str(f)];
             mTextBox = uicontrol('style','text','Position', [80 50 50 20]);
             set(mTextBox,'BackgroundColor',[1 1 1]);
-            if f < (recto - 50)
+            if f < (recto - 45)
                 set(mTextBox,'String','LEFT');
-            elseif f > (recto + 50)
+            elseif f > (recto + 45)
                 set(mTextBox,'String','RIGHT');
             else
                 set(mTextBox,'String','GO');
@@ -61,9 +61,10 @@ function [] = ivc(filename)
         end
         cont = cont + 1;
         %rojo = cat(3, amax, amax, amax);
-        rojo = cat(3, gris, gris, gris);
-        image(rojo);
-        hold on; plot(f,600,'r*'); hold off;
+        %rojo = cat(3, frame, frame, frame);
+        image(frame);
+        %hold on; plot(f,600,'r*'); 
+        hold off;
         title('Trabajo IVC', 'FontSize', 10);
         drawnow;
     end
